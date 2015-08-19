@@ -13,7 +13,10 @@ namespace ASPConsoleApp1
             _timer.Elapsed += (sender, eventArgs) => Console.WriteLine("It is {0} and all is well", DateTime.Now);
         }
         public void Start() { _timer.Start(); }
-        public void Stop() { _timer.Stop(); }
+        public void Stop() {
+            _timer.Stop();
+            Console.WriteLine("Now I stop!");
+        }
     }
 
     public class Program
