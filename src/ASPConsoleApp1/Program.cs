@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Timers;
+using System.Web.Http;
 using Topshelf;
 using Topshelf.WebApi;
 using Topshelf.Ninject;
 using Topshelf.WebApi.Ninject;
+using Ninject;
+using Ninject.Modules;
+
 
 namespace ASPConsoleApp1
 {
@@ -33,19 +37,20 @@ namespace ASPConsoleApp1
                    s.ConstructUsing(name=> new TownCrier());     //3
                    s.WhenStarted(tc => tc.Start());              //4
                    s.WhenStopped(tc => tc.Stop());               //5
-                   s.WebApiEndpoint(api => 
-                //Topshelf.WebApi - Uses localhost as the domain, defaults to port 8080.
-                //You may also use .OnHost() and specify an alternate port.
-                api.OnLocalhost()
-                    //Topshelf.WebApi - Pass a delegate to configure your routes
-                  //  .ConfigureRoutes(Configure)
-                    //Topshelf.WebApi.Ninject (Optional) - You may delegate controller 
-                    //instantiation to Ninject.
-                    //Alternatively you can set the WebAPI Dependency Resolver with
-                    .UseDependencyResolver()
-                   // .UseNinjectDependencyResolver()
-                    //Instantaties and starts the WebAPI Thread.
-                    .Build());
+
+                    s.WebApiEndpoint(api => 
+                        //Topshelf.WebApi - Uses localhost as the domain, defaults to port 8080.
+                        //You may also use .OnHost() and specify an alternate port.
+                        api.OnLocalhost()
+                            //Topshelf.WebApi - Pass a delegate to configure your routes
+                            .ConfigureRoutes(Configure)
+                            //Topshelf.WebApi.Ninject (Optional) - You may delegate controller 
+                            //instantiation to Ninject.
+                            //Alternatively you can set the WebAPI Dependency Resolver with
+                            //.UseDependencyResolver()
+                            //.UseNinjectDependencyResolver()
+                            //Instantaties and starts the WebAPI Thread.
+                            .Build());
                 });
                 x.RunAsLocalSystem();                            //6
 
@@ -53,6 +58,17 @@ namespace ASPConsoleApp1
                 x.SetDisplayName("Stuff");                       //8
                 x.SetServiceName("Stuff");                       //9
             });                                                  //10
+        }
+        private static void Configure(HttpRouteCollection routes)
+        {
+			routes.MapHttpRoute(
+				"Hello",
+				"Api/Hello",
+				new
+					{
+						controller = "Test",
+						action = "ReturnHello"
+					});
         }
     }
 }

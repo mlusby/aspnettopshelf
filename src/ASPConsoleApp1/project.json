@@ -8,11 +8,10 @@
 
   "dependencies": {
     "Topshelf": "3.2.0",
-    "Topshelf.WebApi": "0.4.0.0",
+    "Topshelf.WebApi": "0.4.0",
     "Topshelf.Ninject": "0.4.0.0",
     "Topshelf.WebApi.Ninject": "0.4.0.0",
-    "Ninject": "3.2.3-unstable-012",
-    "Ninject.Extensions.Quartz": "0.3.0.0"
+    "Ninject": "3.2.2"
   },
 
   "commands": {
